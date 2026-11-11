@@ -57,39 +57,48 @@ public class H2ParcelRepository implements ParcelRepository {
         }
     }
 
-    @Override
-    public Optional<Parcel> findByCode(String code) {
-        String sql = "SELECT * FROM PARCEL WHERE CODE = ?";
-        try (Connection connection = connect();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, code);
-            try (ResultSet row = statement.executeQuery()) {
-                return row.next() ? Optional.of(toParcel(row)) : Optional.empty();
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException("Cannot read parcel " + code, e);
+
+
+@Override
+public Optional<Parcel> findByCode(String code) {
+    String sql = "SELECT * FROM PARCEL WHERE CODE = ?";
+
+    try (Connection connection = connect();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+        statement.setString(1, code);
+
+        try (ResultSet row = statement.executeQuery()) {
+            return row.next()
+                    ? Optional.of(toParcel(row))
+                    : Optional.empty();
         }
+
+    } catch (SQLException e) {
+        throw new IllegalStateException("Cannot read parcel " + code, e);
     }
+}
+
 
 
     @Override
     public List<Parcel> findAll() {
         List<Parcel> parcels = new ArrayList<>();
-        String sql = "SELECT * FROM PARCEL ORDER BY CODE";
+      String sql = "SELECT * FROM PARCEL ORDER BY CODE";
 
        try (Connection connection = connect();
-          PreparedStatement statement = connection.prepareStatement(sql);
-          ResultSet row = statement.executeQuery()) {
+             PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet row = statement.executeQuery()) {
 
-           while (row.next()) {
-             parcels.add(toParcel(row));
+            while (row.next()) {
+                parcels.add(toParcel(row));
         }
 
-     } catch (SQLException e) {
-            throw new IllegalStateException("Cannot read the parcels", e);
-       }
+    } catch (SQLException e) {
+        throw new IllegalStateException("Cannot read the parcels", e);
+    }
 
-       return parcels;
+    return parcels;
 }
 
 
