@@ -1,6 +1,6 @@
 # Lab Report, Designing the Data Management Layer with H2
 
-Repository URL:
+Repository URL:https://github.com/Bunnybbell/itcs382-h2-lab.git
 
 ## Tools
 
@@ -13,22 +13,24 @@ Repository URL:
 
 ## Part 0. From a store in memory to H2
 
-Commit of the starter, before any change:
+Commit of the starter, before any change:e902811
 
-0.3 Your prediction for `staff`, written before the second run:
+0.3 Your prediction for `staff`, written before the second run: I predict that staff will show no parcels and all three lockers will be free because the data was only stored in memory.
 
 Output of the second run, for `staff` and `quit`:
 
 ```text
-
+> staff
+Free lockers: 3
+> quit
 ```
 
 State in one sentence where you think the parcels of the first run were kept.
-
+The parcels were stored in a LinkedHashMap in the program's memory, so the data disappeared when the program ended
 0.5 The line of Main that you would change to keep the parcels somewhere else:
 
 ```java
-
+       ParcelRepository repository = new InMemoryParcelRepository();
 ```
 
 0.6 Commit of the switch to H2:
